@@ -1,0 +1,272 @@
+/* ==========================================================================
+   ATELIER ARCHIVE — design system additions on top of Tailwind
+   ========================================================================== */
+
+:root {
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-300: #d6d3d1;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --ink: #1c1917;
+  --clay: #a8563b;
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'cv11' 1;
+  background-image:
+    radial-gradient(60rem 40rem at 110% -10%, rgba(168, 86, 59, 0.04), transparent 60%),
+    radial-gradient(50rem 34rem at -10% 6%, rgba(120, 113, 108, 0.045), transparent 55%);
+}
+
+::selection {
+  background: #1c1917;
+  color: #fafaf9;
+}
+
+/* --- scrollbars ---------------------------------------------------------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d6d3d1 transparent;
+}
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: #ddd8d4;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #c7c1bc;
+  background-clip: content-box;
+}
+
+/* --- focus --------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid rgba(28, 25, 23, 0.55);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* --- details / accordions ------------------------------------------------ */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker,
+details > summary::marker {
+  display: none;
+  content: '';
+}
+
+/* --- display type rhythm ------------------------------------------------- */
+.font-display {
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+}
+
+/* --- keyframes ----------------------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(102%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(6%);
+    opacity: 0.4;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0.92;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.fade-in {
+  animation: none;
+}
+
+.route-enter > .fade-in {
+  animation: fadeUp 0.18s var(--ease-out-soft) both;
+}
+
+.marquee {
+  animation: marquee 42s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .marquee,
+  [class*='animate-['] {
+    animation: none !important;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- range slider -------------------------------------------------------- */
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #1c1917, #d6d3d1);
+  outline: none;
+  cursor: pointer;
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1.5px solid #1c1917;
+  box-shadow: 0 4px 12px -2px rgba(120, 113, 108, 0.5);
+  transition: transform 0.3s var(--ease-out-soft), box-shadow 0.3s var(--ease-out-soft);
+}
+.range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 18px -2px rgba(120, 113, 108, 0.6);
+}
+.range-slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1.5px solid #1c1917;
+  box-shadow: 0 4px 12px -2px rgba(120, 113, 108, 0.5);
+}
+.range-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #e7e5e4;
+}
+
+/* --- image fallback ------------------------------------------------------ */
+img.is-fallback {
+  object-fit: contain;
+  padding: 1.5rem;
+  background: #f5f5f4;
+  filter: grayscale(1);
+}
+
+img {
+  background-color: #f5f5f4;
+}
+
+/* --- seller-shot photography -------------------------------------------- *
+   Neighbour listings are shot on phones: warm flash, mild lens softness,
+   imperfect framing. Deliberately different from the studio rail.
+ * ----------------------------------------------------------------------- */
+.photo-phone {
+  filter: saturate(0.88) contrast(1.06) brightness(1.04) sepia(0.06);
+  transform: rotate(-0.7deg) scale(1.035);
+}
+
+.photo-flash {
+  position: relative;
+}
+.photo-flash::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(115% 85% at 76% 6%, rgba(255, 251, 240, 0.36), transparent 58%);
+  mix-blend-mode: screen;
+}
+
+/* --- print (receipts) ---------------------------------------------------- */
+@media print {
+  #header-root,
+  #footer-root,
+  #drawer-root,
+  #modal-root,
+  #toast-root,
+  #search-root,
+  #chat-root-host {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  details {
+    display: block;
+  }
+  details > summary {
+    display: none;
+  }
+}

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier Archive — the considered second life of clothing</title>
+    <meta
+      name="description"
+      content="Atelier Archive is a peer-to-peer thrift market — half the rail curated and authenticated in studio, half listed by neighbours with their own phone photos and honest measurements."
+    />
+    <meta name="theme-color" content="#fafaf9" />
+    <meta name="color-scheme" content="light" />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231c1917'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' fill='%23fafaf9' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E"
+    />
+
+    <!--
+      Webfonts are the only external request in this app and are entirely optional:
+      the stack falls back to Georgia / system sans. Loaded non-blocking so an
+      offline launch never waits on a dying request before first paint.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&display=swap"
+      />
+    </noscript>
+
+    <script src="assets/vendor/tailwind.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Fraunces', 'Georgia', 'Cambria', 'serif'],
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+            },
+            colors: {
+              clay: {
+                50: '#fdf6f1',
+                100: '#f8e9dd',
+                200: '#efd3c0',
+                300: '#e0b298',
+                400: '#d08d6d',
+                500: '#bd6d4a',
+                600: '#a8563b',
+                700: '#8b4531',
+                800: '#72392b',
+                900: '#5e3126',
+              },
+              ink: '#1c1917',
+            },
+            boxShadow: {
+              ambient: '0 24px 60px -24px rgba(120,113,108,0.45)',
+              soft: '0 18px 40px -18px rgba(120,113,108,0.35)',
+            },
+            letterSpacing: {
+              widest2: '0.3em',
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="stylesheet" href="assets/css/app.css" />
+  </head>
+
+  <body class="min-h-screen bg-stone-50/50 font-sans text-zinc-900 antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-zinc-900 focus:px-5 focus:py-3 focus:text-[11px] focus:uppercase focus:tracking-[0.18em] focus:text-stone-50"
+      >Skip to content</a
+    >
+
+    <div id="header-root" class="contents"></div>
+
+    <main id="main" class="min-h-[62vh]"></main>
+
+    <div id="footer-root"></div>
+
+    <!-- overlay surfaces (each isolated so animations do not replay) -->
+    <div id="drawer-root"></div>
+    <div id="modal-root"></div>
+    <div id="toast-root"></div>
+    <div id="search-root"></div>
+    <div id="chat-root-host"></div>
+
+    <noscript>
+      <div class="mx-auto max-w-lg px-6 py-24 text-center">
+        <h1 class="font-display text-3xl">Atelier Archive</h1>
+        <p class="mt-3 text-sm text-stone-500">This boutique needs JavaScript enabled to browse the floor.</p>
+      </div>
+    </noscript>
+
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>
