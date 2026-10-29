@@ -1,19 +1,28 @@
 /* ==========================================================================
-   ATELIER ARCHIVE — design system additions on top of Tailwind
+   ATELIER ARCHIVE — "PRINT ROOM" skin
+   A warm-paper, ink-and-oxblood art direction: Bodoni display type, mono
+   microtype, hairline rules, sharp frames and letterpress buttons.
+   Layered over Tailwind; the palette itself lives in index.html's config.
    ========================================================================== */
 
 :root {
-  --stone-50: #fafaf9;
-  --stone-100: #f5f5f4;
-  --stone-200: #e7e5e4;
-  --stone-300: #d6d3d1;
-  --stone-400: #a8a29e;
-  --stone-500: #78716c;
-  --ink: #1c1917;
-  --clay: #a8563b;
-  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ink: #171410;
+  --ink-70: rgba(23, 20, 16, 0.7);
+  --ink-45: rgba(23, 20, 16, 0.45);
+  --ink-20: rgba(23, 20, 16, 0.2);
+  --ink-12: rgba(23, 20, 16, 0.12);
+  --bone: #f2ebdd;
+  --paper: #fbf6eb;
+  --oxblood: #5e1b22;
+  --vermilion: #c0442b;
+  --brass: #a98a55;
+  --moss: #33452f;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+/* --------------------------------------------------------------------------
+   Paper & ink
+   -------------------------------------------------------------------------- */
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,65 +30,427 @@ html {
 }
 
 body {
-  font-feature-settings: 'kern' 1, 'liga' 1, 'cv11' 1;
+  background-color: var(--bone);
   background-image:
-    radial-gradient(60rem 40rem at 110% -10%, rgba(168, 86, 59, 0.04), transparent 60%),
-    radial-gradient(50rem 34rem at -10% 6%, rgba(120, 113, 108, 0.045), transparent 55%);
+    radial-gradient(70rem 46rem at 108% -12%, rgba(94, 27, 34, 0.05), transparent 62%),
+    radial-gradient(52rem 38rem at -12% 4%, rgba(169, 138, 85, 0.09), transparent 60%);
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+/* a faint press grain over the whole page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+#header-root,
+#main,
+#footer-root {
+  position: relative;
+  z-index: 1;
+}
+
+#drawer-root,
+#modal-root,
+#toast-root,
+#search-root,
+#chat-root-host {
+  position: relative;
 }
 
 ::selection {
-  background: #1c1917;
-  color: #fafaf9;
+  background: var(--oxblood);
+  color: var(--paper);
 }
 
 /* --- scrollbars ---------------------------------------------------------- */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #d6d3d1 transparent;
+  scrollbar-color: var(--ink-20) transparent;
 }
 *::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
 }
 *::-webkit-scrollbar-track {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background: #ddd8d4;
+  background: var(--ink-20);
   border: 3px solid transparent;
-  border-radius: 999px;
+  border-radius: 0;
   background-clip: content-box;
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: #c7c1bc;
+  background: var(--ink-45);
   background-clip: content-box;
 }
 
 /* --- focus --------------------------------------------------------------- */
 :focus-visible {
-  outline: 2px solid rgba(28, 25, 23, 0.55);
-  outline-offset: 2px;
-  border-radius: 6px;
+  outline: 1.5px solid var(--oxblood);
+  outline-offset: 3px;
+  border-radius: 0;
 }
 
-/* --- details / accordions ------------------------------------------------ */
-details > summary {
-  list-style: none;
-  cursor: pointer;
-}
-details > summary::-webkit-details-marker,
-details > summary::marker {
-  display: none;
-  content: '';
-}
-
-/* --- display type rhythm ------------------------------------------------- */
+/* --- display type -------------------------------------------------------- */
 .font-display {
   font-optical-sizing: auto;
-  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  letter-spacing: -0.015em;
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
-/* --- keyframes ----------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Buttons — letterpress blocks: square, mono, offset shadow on hover
+   -------------------------------------------------------------------------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.95rem 1.55rem;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  min-width: 0;
+  transition:
+    transform 0.28s var(--ease),
+    box-shadow 0.28s var(--ease),
+    background-color 0.28s var(--ease),
+    color 0.28s var(--ease),
+    border-color 0.28s var(--ease);
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+.btn:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+.btn svg {
+  transition: transform 0.3s var(--ease);
+}
+.btn:hover svg {
+  transform: translateX(2px);
+}
+
+.btn--solid {
+  background: var(--ink);
+  color: var(--bone);
+}
+.btn--solid:hover {
+  background: var(--oxblood);
+  border-color: var(--oxblood);
+  box-shadow: 3px 3px 0 0 var(--brass);
+}
+
+.btn--line {
+  background: transparent;
+}
+.btn--line:hover {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.btn--sale {
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+  color: var(--paper);
+}
+.btn--sale:hover {
+  background: var(--oxblood);
+  border-color: var(--oxblood);
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+
+.btn--sm {
+  padding: 0.7rem 1rem;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+
+.btn--icon {
+  width: 2.85rem;
+  height: 2.85rem;
+  padding: 0;
+  border-radius: 2px;
+}
+
+.btn--bare {
+  border-color: transparent;
+  padding: 0.55rem 0.7rem;
+}
+.btn--bare:hover {
+  border-color: var(--ink);
+  background: var(--paper);
+  box-shadow: none;
+  transform: none;
+}
+
+/* small round icon control used in the masthead */
+.icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: var(--ink);
+  transition:
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+.icon-btn:hover {
+  background: var(--paper);
+  border-color: var(--ink-20);
+}
+.icon-btn[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+/* --------------------------------------------------------------------------
+   Labels, tags, rules
+   -------------------------------------------------------------------------- */
+.eyebrow {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--ink-20);
+  border-radius: 2px;
+  background: var(--paper);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ink-70);
+}
+.tag--solid {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bone);
+}
+.tag--sale {
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+  color: var(--paper);
+}
+.tag--vault {
+  background: rgba(169, 138, 85, 0.14);
+  border-color: rgba(169, 138, 85, 0.45);
+  color: #6f4e22;
+}
+.tag--good {
+  background: rgba(51, 69, 47, 0.08);
+  border-color: rgba(51, 69, 47, 0.3);
+  color: var(--moss);
+}
+
+.rule {
+  height: 1px;
+  background: var(--ink-12);
+}
+.rule--ink {
+  background: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Surfaces
+   -------------------------------------------------------------------------- */
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--ink-12);
+  border-radius: 2px;
+}
+.panel--flush {
+  border-left: 0;
+  border-right: 0;
+}
+
+.card {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--ink-12);
+  border-radius: 2px;
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+.card:hover {
+  border-color: var(--ink-45);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 44px -36px rgba(23, 20, 16, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   Product card
+   -------------------------------------------------------------------------- */
+.pcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--ink-12);
+  border-radius: 2px;
+  padding: 9px;
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+.pcard:hover {
+  border-color: var(--ink);
+  transform: translateY(-4px);
+  box-shadow: 0 26px 50px -40px rgba(23, 20, 16, 0.8);
+}
+.pcard__media {
+  position: relative;
+  overflow: hidden;
+  background: #e9e0cf;
+  aspect-ratio: 4 / 5;
+}
+.pcard__media img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 1.1s var(--ease);
+}
+.pcard:hover .pcard__media img {
+  transform: scale(1.045);
+}
+.pcard__meta {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+.pcard__title {
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.pcard__title:hover {
+  color: var(--oxblood);
+}
+.pcard__price {
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.pcard__old {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--ink-45);
+  text-decoration: line-through;
+}
+
+/* --------------------------------------------------------------------------
+   Form fields
+   -------------------------------------------------------------------------- */
+.field {
+  width: 100%;
+  border: 1px solid var(--ink-20);
+  border-radius: 2px;
+  background: var(--paper);
+  padding: 0.85rem 0.95rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  transition:
+    border-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    background-color 0.25s var(--ease);
+}
+.field::placeholder {
+  color: var(--ink-45);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 0 rgba(23, 20, 16, 0.12);
+}
+.field--mono {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+/* --------------------------------------------------------------------------
+   The seal (rotating stamp in the hero)
+   -------------------------------------------------------------------------- */
+.seal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 148px;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  animation: sealSpin 46s linear infinite;
+}
+.seal__text {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.seal__core {
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-size: 30px;
+  line-height: 1;
+}
+
+@keyframes sealSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Motion
+   -------------------------------------------------------------------------- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -151,16 +522,42 @@ details > summary::marker {
   }
 }
 
+@keyframes pressIn {
+  0% {
+    transform: scale(1) rotate(-6deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.06) rotate(-6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(-6deg);
+    opacity: 1;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
 .fade-in {
   animation: none;
 }
-
 .route-enter > .fade-in {
-  animation: fadeUp 0.18s var(--ease-out-soft) both;
+  animation: fadeUp 0.22s var(--ease) both;
 }
 
 .marquee {
-  animation: marquee 42s linear infinite;
+  animation: marquee 52s linear infinite;
 }
 .marquee:hover {
   animation-play-state: paused;
@@ -169,69 +566,71 @@ details > summary::marker {
 @media (prefers-reduced-motion: reduce) {
   .fade-in,
   .marquee,
+  .seal,
+  .reveal,
   [class*='animate-['] {
     animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
   * {
     scroll-behavior: auto !important;
   }
 }
 
-/* --- range slider -------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Range slider
+   -------------------------------------------------------------------------- */
 .range-slider {
   -webkit-appearance: none;
   appearance: none;
-  height: 4px;
-  border-radius: 999px;
-  background: linear-gradient(to right, #1c1917, #d6d3d1);
+  height: 3px;
+  border-radius: 0;
+  background: linear-gradient(to right, var(--ink), var(--ink-20));
   outline: none;
   cursor: pointer;
 }
 .range-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  height: 18px;
-  width: 18px;
-  border-radius: 999px;
-  background: #ffffff;
-  border: 1.5px solid #1c1917;
-  box-shadow: 0 4px 12px -2px rgba(120, 113, 108, 0.5);
-  transition: transform 0.3s var(--ease-out-soft), box-shadow 0.3s var(--ease-out-soft);
+  height: 16px;
+  width: 16px;
+  border-radius: 0;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: 2px 2px 0 0 rgba(23, 20, 16, 0.25);
+  transition: transform 0.25s var(--ease);
 }
 .range-slider::-webkit-slider-thumb:hover {
   transform: scale(1.12);
-  box-shadow: 0 6px 18px -2px rgba(120, 113, 108, 0.6);
 }
 .range-slider::-moz-range-thumb {
-  height: 16px;
-  width: 16px;
-  border-radius: 999px;
-  background: #ffffff;
-  border: 1.5px solid #1c1917;
-  box-shadow: 0 4px 12px -2px rgba(120, 113, 108, 0.5);
+  height: 15px;
+  width: 15px;
+  border-radius: 0;
+  background: var(--paper);
+  border: 1px solid var(--ink);
 }
 .range-slider::-moz-range-track {
-  height: 4px;
-  border-radius: 999px;
-  background: #e7e5e4;
+  height: 3px;
+  background: var(--ink-20);
 }
 
-/* --- image fallback ------------------------------------------------------ */
+/* --------------------------------------------------------------------------
+   Imagery
+   -------------------------------------------------------------------------- */
 img.is-fallback {
   object-fit: contain;
   padding: 1.5rem;
-  background: #f5f5f4;
+  background: #e9e0cf;
   filter: grayscale(1);
 }
 
 img {
-  background-color: #f5f5f4;
+  background-color: #e9e0cf;
 }
 
-/* --- seller-shot photography -------------------------------------------- *
-   Neighbour listings are shot on phones: warm flash, mild lens softness,
-   imperfect framing. Deliberately different from the studio rail.
- * ----------------------------------------------------------------------- */
 .photo-phone {
   filter: saturate(0.88) contrast(1.06) brightness(1.04) sepia(0.06);
   transform: rotate(-0.7deg) scale(1.035);
@@ -249,7 +648,48 @@ img {
   mix-blend-mode: screen;
 }
 
-/* --- print (receipts) ---------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Sharpening pass — the previous skin was pill-and-blur; the print room is
+   square. These overrides flatten the legacy rounded surfaces.
+   -------------------------------------------------------------------------- */
+[class*='rounded-[2'],
+[class*='rounded-[3'],
+.rounded-2xl,
+.rounded-3xl {
+  border-radius: 3px !important;
+}
+.shadow-xl,
+.shadow-2xl {
+  box-shadow: 0 22px 44px -38px rgba(23, 20, 16, 0.55) !important;
+}
+
+/* legacy pill controls become plates */
+button.rounded-full,
+a.rounded-full,
+select.rounded-full {
+  border-radius: 2px !important;
+}
+
+/* ticker fade at the edges */
+.ticker-mask {
+  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+}
+.backdrop-blur-xl,
+.backdrop-blur-md,
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* receipt rules for the checkout column */
+.receipt-rule {
+  border-top: 1px dashed var(--ink-20);
+}
+
+/* --------------------------------------------------------------------------
+   Print (receipts)
+   -------------------------------------------------------------------------- */
 @media print {
   #header-root,
   #footer-root,
@@ -262,6 +702,9 @@ img {
   }
   body {
     background: #fff;
+  }
+  body::before {
+    display: none;
   }
   details {
     display: block;

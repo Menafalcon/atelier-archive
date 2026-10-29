@@ -50,8 +50,9 @@ All photography is mirrored locally in `assets/img/` (37 files, ~5 MB, one-time)
 kept in the `UNSPLASH` map in `catalog.js` for provenance, and every `<img>` still carries a
 generated SVG fallback.
 
-The only remaining optional network call is Google Fonts; the stack falls back to Georgia /
-system sans if it is unavailable.
+Typography is vendored too: `assets/fonts/` holds the latin subsets of Bodoni Moda, Manrope and
+IBM Plex Mono (OFL), declared in `assets/css/fonts.css`. The application makes **no network
+request at all** at runtime, fonts included.
 
 ---
 
@@ -98,19 +99,30 @@ order ledger, wallet vouchers and reward points. Any email works too.
 
 ---
 
-## Design system
+## Design system — "Print Room"
+
+A warm-paper, ink-and-oxblood art direction: a didone display face, mono microtype, hairline
+rules, sharp frames and letterpress buttons. It is still Tailwind utilities first, with a small
+component layer in `assets/css/app.css`.
 
 | Token | Use |
 | --- | --- |
-| `bg-stone-50/50` | page canvas, warm neutral |
-| `bg-white` + `shadow-xl shadow-stone-200/40` | cards, no borders |
-| `text-zinc-900` | charcoal type, never pure black |
-| `clay-*` | single warm accent for price deltas and links |
-| `rounded-[24px…32px]` | organic corner rhythm |
-| `transition-all duration-300 ease-out` | every interactive surface |
-| Fraunces / Inter | editorial display + neutral UI |
+| `bg-bone` (`#F2EBDD`) | page canvas — warm press paper, with a faint grain overlay |
+| `bg-paper` (`#FBF6EB`) + `border-ink/12` | cards, panels, drawers |
+| `text-ink` (`#171410`) | type; never pure black |
+| `oxblood` / `vermilion` | primary accent and urgency (badges, sale) |
+| `brass` | reviews, vault tags, small luxe details |
+| `.btn` / `.btn--solid` / `.btn--line` | square letterpress buttons, offset shadow on hover |
+| `.tag` | mono chips for condition, era and badges |
+| `.pcard` | product card: sharp frame, slow image zoom, mono meta |
+| `.receipt-rule` | dashed rules for the checkout summary |
+| Bodoni Moda / Manrope / IBM Plex Mono | display, interface, labels and figures |
 
-Product cards: `hover:-translate-y-1 hover:scale-[1.015] hover:shadow-2xl hover:shadow-stone-300/50`.
+Interface sound is synthesised in `assets/js/core/sound.js` (no files): a quiet tick on
+actions, a pop when a piece enters the bag, a chime on order confirmation. The speaker control
+in the masthead mutes it and remembers the choice in `localStorage`.
+
+Product cards use `.pcard`: a sharp frame, a 4px lift on hover, and a slow image zoom.
 
 ---
 

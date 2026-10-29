@@ -34,80 +34,78 @@ export function summaryPanel(state, totals) {
 
   return html`
     <div id="checkout-summary" class="space-y-4">
-      <div class="rounded-[28px] bg-white p-6 shadow-xl shadow-stone-200/40">
-        <div class="flex items-baseline justify-between">
-          <h2 class="font-display text-[17px] tracking-tight text-zinc-900">Order summary</h2>
-          <span class="text-[9.5px] uppercase tracking-[0.16em] text-stone-400">${totals.units} ${totals.units === 1 ? 'piece' : 'pieces'}</span>
+      <div class="border border-ink/15 bg-paper">
+        <div class="flex items-baseline justify-between border-b border-ink/10 px-5 py-4">
+          <h2 class="font-display text-[21px] leading-none text-ink">Order summary</h2>
+          <span class="font-mono text-[8.5px] uppercase tracking-[0.18em] text-ink/45">${totals.units} ${totals.units === 1 ? 'piece' : 'pieces'}</span>
         </div>
 
-        <ul class="mt-5 space-y-3.5">
+        <ul class="divide-y divide-ink/10 px-5">
           ${totals.lines.map(
-            (line) => html`<li class="flex items-center gap-3">
-              <span class="relative h-16 w-14 shrink-0 overflow-hidden rounded-xl bg-stone-100">
+            (line) => html`<li class="flex items-center gap-3 py-4">
+              <span class="relative h-[68px] w-[54px] shrink-0 overflow-hidden border border-ink/10 bg-stone-100">
                 <img src="${img(line.product.images[0])}" alt="${line.product.title}" data-fallback="" class="h-full w-full object-cover" />
-                <span class="absolute -right-1 -top-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-zinc-900 px-1 text-[8.5px] text-stone-50">${line.qty}</span>
+                <span class="absolute right-0 top-0 grid h-4 min-w-4 place-items-center bg-ink px-1 font-mono text-[8px] text-bone">${line.qty}</span>
               </span>
               <span class="min-w-0 flex-1">
-                <span class="block truncate text-[11.5px] text-zinc-900">${line.product.shortTitle}</span>
-                <span class="mt-0.5 block text-[10px] text-stone-400">Size ${line.product.size} · ${line.product.condition}</span>
+                <span class="block truncate font-display text-[15px] leading-tight text-ink">${line.product.shortTitle}</span>
+                <span class="mt-1 block font-mono text-[8.5px] uppercase tracking-[0.12em] text-ink/45">Size ${line.product.size} · ${line.product.condition}</span>
               </span>
-              <span class="shrink-0 text-[11.5px] tabular-nums text-zinc-900">${money(line.product.price * line.qty)}</span>
+              <span class="shrink-0 font-mono text-[11px] tabular-nums text-ink">${money(line.product.price * line.qty)}</span>
             </li>`,
           )}
         </ul>
 
         <!-- coupon -->
-        <div class="mt-6 border-t border-stone-100 pt-5">
+        <div class="border-t border-ink/10 px-5 py-4">
           <label class="${LABEL} mb-2" for="coupon">Promotion code</label>
           ${applied
-            ? html`<div class="flex items-center justify-between gap-2 rounded-2xl bg-emerald-50 px-4 py-3">
+            ? html`<div class="flex items-center justify-between gap-2 border border-emerald-700/25 bg-emerald-50 px-3 py-2.5">
                 <div class="min-w-0">
-                  <p class="flex items-center gap-1.5 text-[11px] font-medium text-emerald-900">${icon('tag', 'h-3.5 w-3.5')} ${applied.code}</p>
-                  <p class="mt-0.5 truncate text-[10px] text-emerald-700">${applied.blurb}</p>
+                  <p class="flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-emerald-900">${icon('tag', 'h-3.5 w-3.5')} ${applied.code}</p>
+                  <p class="mt-1 truncate text-[10px] text-emerald-800/80">${applied.blurb}</p>
                 </div>
-                <button type="button" data-action="remove-coupon" class="shrink-0 rounded-full p-1 text-emerald-700/60 transition-all duration-300 hover:bg-emerald-100 hover:text-emerald-900" aria-label="Remove coupon">${icon('close', 'h-3.5 w-3.5')}</button>
+                <button type="button" data-action="remove-coupon" class="shrink-0 p-1 text-emerald-800/60 transition-colors hover:text-emerald-900" aria-label="Remove coupon">${icon('close', 'h-3.5 w-3.5')}</button>
               </div>`
             : html`<div class="flex gap-2">
-                <input id="coupon" type="text" placeholder="WELCOME10" value="${checkout.couponError ? checkout.coupon : ''}" data-coupon-input class="w-full rounded-full border-0 bg-stone-100/80 px-4 py-2.5 text-[11.5px] uppercase tracking-[0.1em] text-zinc-900 placeholder:text-stone-400 placeholder:normal-case placeholder:tracking-normal transition-all duration-300 ease-out focus:bg-white focus:outline-none focus:ring-2 focus:ring-zinc-900/10" />
-                <button type="button" data-action="apply-coupon" class="shrink-0 rounded-full bg-zinc-900 px-5 text-[9.5px] font-medium uppercase tracking-[0.16em] text-stone-50 transition-all duration-300 ease-out hover:bg-zinc-800">Apply</button>
+                <input id="coupon" type="text" placeholder="WELCOME10" value="${checkout.couponError ? checkout.coupon : ''}" data-coupon-input class="field field--mono !py-2.5 uppercase" />
+                <button type="button" data-action="apply-coupon" class="btn btn--solid btn--sm shrink-0">Apply</button>
               </div>`}
-          ${checkout.couponError ? html`<p class="mt-2 flex items-center gap-1.5 text-[10.5px] text-clay-700">${icon('info', 'h-3 w-3')} ${checkout.couponError}</p>` : ''}
-          ${!applied ? html`<p class="mt-2 text-[9.5px] text-stone-400">Try <button type="button" data-action="try-coupon" data-code="WELCOME10" class="underline decoration-dotted underline-offset-2 transition hover:text-zinc-700">WELCOME10</button> · <button type="button" data-action="try-coupon" data-code="VAULT25" class="underline decoration-dotted underline-offset-2 transition hover:text-zinc-700">VAULT25</button> · <button type="button" data-action="try-coupon" data-code="FREESHIP" class="underline decoration-dotted underline-offset-2 transition hover:text-zinc-700">FREESHIP</button></p>` : ''}
+          ${checkout.couponError ? html`<p class="mt-2 flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.08em] text-clay-700">${icon('info', 'h-3 w-3')} ${checkout.couponError}</p>` : ''}
+          ${!applied ? html`<p class="mt-2 font-mono text-[8.5px] uppercase tracking-[0.08em] text-ink/35">Try <button type="button" data-action="try-coupon" data-code="WELCOME10" class="underline decoration-dotted underline-offset-2 transition hover:text-ink">WELCOME10</button> · <button type="button" data-action="try-coupon" data-code="VAULT25" class="underline decoration-dotted underline-offset-2 transition hover:text-ink">VAULT25</button> · <button type="button" data-action="try-coupon" data-code="FREESHIP" class="underline decoration-dotted underline-offset-2 transition hover:text-ink">FREESHIP</button></p>` : ''}
         </div>
 
-        <dl class="mt-5 space-y-2.5 border-t border-stone-100 pt-5 text-[12px]">
-          <div class="flex justify-between"><dt class="text-stone-500">Subtotal</dt><dd class="tabular-nums text-zinc-900">${money(totals.subtotal)}</dd></div>
+        <dl class="space-y-2 border-t border-ink/10 px-5 py-4 font-mono text-[10px] uppercase tracking-[0.06em]">
+          <div class="flex justify-between"><dt class="text-ink/45">Subtotal</dt><dd class="tabular-nums text-ink">${money(totals.subtotal)}</dd></div>
           ${totals.discount > 0
-            ? html`<div class="flex justify-between"><dt class="text-emerald-700">Discount · ${applied?.code}</dt><dd class="tabular-nums text-emerald-700">−${money(totals.discount)}</dd></div>`
+            ? html`<div class="flex justify-between"><dt class="text-emerald-800">Discount · ${applied?.code}</dt><dd class="tabular-nums text-emerald-800">−${money(totals.discount)}</dd></div>`
             : ''}
-          <div class="flex justify-between"><dt class="text-stone-500">Shipping · ${totals.zone.courier}</dt><dd class="tabular-nums ${totals.freeShipping ? 'text-emerald-700' : 'text-zinc-900'}">${totals.freeShipping ? 'Free' : money(totals.shipping)}</dd></div>
-          <div class="flex justify-between"><dt class="text-stone-500">TVA · ${(totals.taxRate * 100).toFixed(totals.taxRate * 100 % 1 === 0 ? 0 : 2)}%</dt><dd class="tabular-nums text-zinc-900">${money(totals.tax)}</dd></div>
-          <div class="flex justify-between"><dt class="text-stone-500">Payment</dt><dd class="text-right text-[11px] font-medium text-zinc-900">${checkout.payment === 'cod' ? 'Cash on delivery' : 'Bank card (Demo)'}</dd></div>
-          <div class="flex items-baseline justify-between border-t border-stone-200/80 pt-3.5">
-            <dt class="text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-900">Total</dt>
-            <dd class="font-display text-[22px] tracking-tight text-zinc-900">${money(totals.total)}</dd>
+          <div class="flex justify-between"><dt class="text-ink/45">Shipping · ${totals.zone.courier}</dt><dd class="tabular-nums ${totals.freeShipping ? 'text-emerald-800' : 'text-ink'}">${totals.freeShipping ? 'Free' : money(totals.shipping)}</dd></div>
+          <div class="flex justify-between"><dt class="text-ink/45">TVA · ${(totals.taxRate * 100).toFixed(totals.taxRate * 100 % 1 === 0 ? 0 : 2)}%</dt><dd class="tabular-nums text-ink">${money(totals.tax)}</dd></div>
+          <div class="flex justify-between"><dt class="text-ink/45">Payment</dt><dd class="text-right text-[9px] text-ink">${checkout.payment === 'cod' ? 'Cash on delivery' : 'Bank card (Demo)'}</dd></div>
+          <div class="mt-3 flex items-baseline justify-between border-t border-ink/15 pt-3.5">
+            <dt class="font-mono text-[9.5px] uppercase tracking-[0.18em] text-ink">Total</dt>
+            <dd class="font-display text-[30px] leading-none tracking-tight text-ink">${money(totals.total)}</dd>
           </div>
         </dl>
 
         ${totals.savings > 0
-          ? html`<p class="mt-3 flex items-center gap-1.5 rounded-xl bg-stone-50 px-3 py-2 text-[10px] text-stone-500">${icon('sparkle', 'h-3 w-3 text-clay-600')} You are saving ${money(totals.savings + totals.discount)} against retail.</p>`
+          ? html`<p class="mx-5 mb-5 flex items-center gap-1.5 border border-brass/40 bg-amber-50 px-3 py-2 font-mono text-[8.5px] uppercase tracking-[0.1em] text-amber-900">${icon('sparkle', 'h-3 w-3 text-brass')} You are saving ${money(totals.savings + totals.discount)} against retail.</p>`
           : ''}
       </div>
 
-      <div class="rounded-[24px] bg-white/70 p-5 shadow-sm shadow-stone-200/40">
-        <p class="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-stone-400">${icon('shield', 'h-3.5 w-3.5')} Demo checkout</p>
+      <div class="border border-dashed border-ink/20 p-5">
+        <p class="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-ink/45">${icon('shield', 'h-3.5 w-3.5')} Demo checkout</p>
         <ul class="mt-3 space-y-2 text-[10.5px] text-stone-500">
-          <li class="flex items-start gap-2">${icon('check', 'h-3 w-3 mt-0.5 text-emerald-600')} Enter any delivery address in Tunisia</li>
-          <li class="flex items-start gap-2">${icon('check', 'h-3 w-3 mt-0.5 text-emerald-600')} Choose Cash on Delivery or Demo Card</li>
-          <li class="flex items-start gap-2">${icon('check', 'h-3 w-3 mt-0.5 text-emerald-600')} Simulated order — nothing is actually charged</li>
+          <li class="flex items-start gap-2">${icon('check', 'h-3 w-3 mt-0.5 text-emerald-700')} Enter any delivery address in Tunisia</li>
+          <li class="flex items-start gap-2">${icon('check', 'h-3 w-3 mt-0.5 text-emerald-700')} Choose Cash on Delivery or Demo Card</li>
+          <li class="flex items-start gap-2">${icon('check', 'h-3 w-3 mt-0.5 text-emerald-700')} Simulated order — nothing is actually charged</li>
         </ul>
       </div>
     </div>`;
 }
 
-/* ------------------------------------------------------------------ *
- * Unified Demo Checkout Form (Address + Delivery + Card/COD Payment)
- * ------------------------------------------------------------------ */
+
 function checkoutForm(state, totals) {
   const s = state.ui.checkout.shipping;
   const zone = zoneFor(s.gov);
@@ -127,7 +125,7 @@ function checkoutForm(state, totals) {
           <button
             type="button"
             data-action="fill-address"
-            class="inline-flex items-center gap-1.5 rounded-full bg-stone-100 px-3.5 py-2 text-[9.5px] font-medium uppercase tracking-[0.14em] text-zinc-800 transition-all duration-200 hover:bg-zinc-900 hover:text-stone-50"
+            class="btn btn--line btn--sm"
           >
             ${icon('sparkle', 'h-3 w-3')} Fill demo address
           </button>
@@ -431,7 +429,7 @@ export function renderCheckout(state) {
 
       <section class="mx-auto max-w-[1440px] px-5 py-9 lg:px-10 lg:py-12">
         <div class="grid gap-6 lg:grid-cols-[1.35fr_0.65fr] lg:gap-8">
-          <div class="rounded-[30px] bg-white p-6 shadow-xl shadow-stone-200/40 sm:p-8 lg:p-10">
+          <div class="border border-ink/15 bg-paper p-6 sm:p-8 lg:p-10">
             <div data-step-error class="mb-6 hidden items-center justify-between gap-3 rounded-2xl bg-clay-50 px-4 py-3 text-[11.5px] text-clay-800"></div>
             ${step >= 5 && checkout.placedOrder ? stepConfirmed(state, totals) : checkoutForm(state, totals)}
           </div>

@@ -8,33 +8,20 @@
       name="description"
       content="Atelier Archive is a peer-to-peer thrift market — half the rail curated and authenticated in studio, half listed by neighbours with their own phone photos and honest measurements."
     />
-    <meta name="theme-color" content="#fafaf9" />
+    <meta name="theme-color" content="#F2EBDD" />
     <meta name="color-scheme" content="light" />
 
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231c1917'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' fill='%23fafaf9' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23171410'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='34' fill='%23F2EBDD' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E"
     />
 
     <!--
-      Webfonts are the only external request in this app and are entirely optional:
-      the stack falls back to Georgia / system sans. Loaded non-blocking so an
-      offline launch never waits on a dying request before first paint.
+      Type is vendored in assets/fonts (latin subsets, OFL): Bodoni Moda for display,
+      Manrope for the interface, IBM Plex Mono for labels and figures. No network
+      request is made at runtime, so the archive renders identically offline.
     -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&display=swap"
-      />
-    </noscript>
+    <link rel="stylesheet" href="assets/css/fonts.css" />
 
     <script src="assets/vendor/tailwind.js"></script>
     <script>
@@ -42,30 +29,89 @@
         theme: {
           extend: {
             fontFamily: {
-              display: ['Fraunces', 'Georgia', 'Cambria', 'serif'],
-              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+              display: ['Bodoni Moda', 'Didot', 'Georgia', 'Cambria', 'serif'],
+              sans: ['Manrope', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+              mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'Consolas', 'monospace'],
             },
             colors: {
+              ink: '#171410',
+              bone: '#F2EBDD',
+              paper: '#FBF6EB',
+              oxblood: '#5E1B22',
+              vermilion: '#C0442B',
+              brass: '#A98A55',
+              moss: '#33452F',
               clay: {
-                50: '#fdf6f1',
-                100: '#f8e9dd',
-                200: '#efd3c0',
-                300: '#e0b298',
-                400: '#d08d6d',
-                500: '#bd6d4a',
-                600: '#a8563b',
-                700: '#8b4531',
-                800: '#72392b',
-                900: '#5e3126',
+                50: '#F7ECEA',
+                100: '#EFD9D5',
+                200: '#E0B4AE',
+                300: '#CB8A82',
+                400: '#B06257',
+                500: '#934338',
+                600: '#76302A',
+                700: '#5E1B22',
+                800: '#4A151B',
+                900: '#380F14',
               },
-              ink: '#1c1917',
+              stone: {
+                50: '#F7F1E6',
+                100: '#EFE7D8',
+                200: '#E2D7C4',
+                300: '#CFC1AA',
+                400: '#AF9F87',
+                500: '#8B7B65',
+                600: '#6A5C4A',
+                700: '#4C4135',
+                800: '#322A22',
+                900: '#1E1913',
+              },
+              zinc: {
+                50: '#F5F0E6',
+                100: '#E9E2D4',
+                200: '#D9CFBE',
+                300: '#C2B6A2',
+                400: '#9C8F7B',
+                500: '#7A6E5C',
+                600: '#5B5143',
+                700: '#413A30',
+                800: '#2A251E',
+                900: '#171410',
+              },
+              amber: {
+                50: '#FAF4E4',
+                100: '#F3E7C8',
+                200: '#E6D09B',
+                300: '#D5B36C',
+                400: '#C09648',
+                500: '#A87C34',
+                600: '#8C632A',
+                700: '#6F4E22',
+                800: '#553C1C',
+                900: '#3F2D16',
+              },
+              emerald: {
+                50: '#EFF3EC',
+                100: '#DCE5D7',
+                200: '#BCCCB4',
+                300: '#97AC8D',
+                400: '#728C68',
+                500: '#576F4E',
+                600: '#42573B',
+                700: '#34462F',
+                800: '#293826',
+                900: '#1F2B1D',
+              },
             },
             boxShadow: {
-              ambient: '0 24px 60px -24px rgba(120,113,108,0.45)',
-              soft: '0 18px 40px -18px rgba(120,113,108,0.35)',
+              ambient: '0 1px 2px rgba(23,20,16,0.06), 0 24px 48px -40px rgba(23,20,16,0.55)',
+              soft: '0 1px 2px rgba(23,20,16,0.05), 0 18px 36px -32px rgba(23,20,16,0.45)',
+              stamp: '4px 4px 0 0 #171410',
             },
             letterSpacing: {
               widest2: '0.3em',
+            },
+            borderRadius: {
+              sharp: '2px',
             },
           },
         },
@@ -75,10 +121,10 @@
     <link rel="stylesheet" href="assets/css/app.css" />
   </head>
 
-  <body class="min-h-screen bg-stone-50/50 font-sans text-zinc-900 antialiased">
+  <body class="min-h-screen bg-bone font-sans text-ink antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-zinc-900 focus:px-5 focus:py-3 focus:text-[11px] focus:uppercase focus:tracking-[0.18em] focus:text-stone-50"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-ink focus:px-5 focus:py-3 focus:font-mono focus:text-[10px] focus:uppercase focus:tracking-[0.18em] focus:text-bone"
       >Skip to content</a
     >
 

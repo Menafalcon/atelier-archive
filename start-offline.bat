@@ -18,15 +18,34 @@ echo   browser: %BROWSER%
 echo.
 
 where node >nul 2>nul
-if errorlevel 1 (
-  echo   Node.js was not found on this machine.
-  echo.
-  echo   Install it once from https://nodejs.org  ^(LTS build^),
-  echo   then double-click this file again. No other setup is needed.
-  echo.
-  pause
-  exit /b 1
+if not errorlevel 1 (
+  set "SERVER=node server.js --port 4173 --host 127.0.0.1"
+  goto have_server
 )
+
+where py >nul 2>nul
+if not errorlevel 1 (
+  set "SERVER=py -3 -m http.server 4173 --bind 127.0.0.1"
+  goto have_server
+)
+
+where python >nul 2>nul
+if not errorlevel 1 (
+  set "SERVER=python -m http.server 4173 --bind 127.0.0.1"
+  goto have_server
+)
+
+echo   Neither Node.js nor Python was found on this machine.
+echo.
+echo   Install either one, once:
+echo     - Node.js  https://nodejs.org  ^(LTS build^)
+echo     - Python   https://python.org/downloads
+echo   then double-click this file again. No other setup is needed.
+echo.
+pause
+exit /b 1
+
+:have_server
 
 if not exist "server.js" (
   echo   server.js is missing.
@@ -50,7 +69,7 @@ rem --- start the server in its own window, then open the browser -----------
 echo   Starting the server on http://127.0.0.1:4173
 echo   Leave the server window open while you browse. Close it to stop.
 echo.
-start "Atelier Archive - server" cmd /k "node server.js --port 4173 --host 127.0.0.1"
+start "Atelier Archive - server" cmd /k "%SERVER%"
 
 rem give node a moment to bind the port
 for /l %%i in (1,1,20) do (

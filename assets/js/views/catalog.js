@@ -64,7 +64,7 @@ function checkRow({ key, label, active, action, value, count }) {
         data-value="${value}"
         class="group flex w-full items-center gap-3 py-1.5 text-left transition-all duration-300 ease-out"
       >
-        <span class="grid h-4 w-4 shrink-0 place-items-center rounded-[5px] border transition-all duration-300 ease-out ${
+        <span class="grid h-4 w-4 shrink-0 place-items-center rounded-[2px] border transition-all duration-300 ease-out ${
           active ? 'border-zinc-900 bg-zinc-900 text-stone-50' : 'border-stone-300 bg-white text-transparent group-hover:border-stone-400'
         }">
           ${icon('check', 'h-2.5 w-2.5')}
@@ -84,10 +84,8 @@ function filterRail(filters, results, { mobile = false } = {}) {
           data-action="toggle-filter"
           data-key="${key}"
           data-value="${value}"
-          class="rounded-full px-3.5 py-2 text-[11px] tracking-wide transition-all duration-300 ease-out ${
-            filters[key].includes(value)
-              ? 'bg-zinc-900 text-stone-50 shadow-md shadow-stone-400/30'
-              : 'bg-white text-stone-600 shadow-sm shadow-stone-200/70 hover:-translate-y-0.5 hover:text-zinc-900 hover:shadow-md'
+          class="tag transition-all duration-300 ${
+            filters[key].includes(value) ? 'tag--solid' : 'hover:border-ink hover:text-ink'
           }"
         >
           ${value}
@@ -104,7 +102,7 @@ function filterRail(filters, results, { mobile = false } = {}) {
       </div>
 
       <!-- category -->
-      <section class="rounded-[24px] bg-white p-5 shadow-xl shadow-stone-200/40">
+      <section class="border border-ink/12 bg-paper p-5">
         <h3 class="mb-3 text-[9.5px] font-medium uppercase tracking-[0.24em] text-stone-400">Category</h3>
         <ul class="space-y-0.5">
           ${CATEGORIES.map((c) =>
@@ -121,13 +119,13 @@ function filterRail(filters, results, { mobile = false } = {}) {
       </section>
 
       <!-- size -->
-      <section class="rounded-[24px] bg-white p-5 shadow-xl shadow-stone-200/40">
+      <section class="border border-ink/12 bg-paper p-5">
         <h3 class="mb-3.5 text-[9.5px] font-medium uppercase tracking-[0.24em] text-stone-400">Size</h3>
         <div class="flex flex-wrap gap-1.5">${chips(SIZES, 'sizes')}</div>
       </section>
 
       <!-- condition -->
-      <section class="rounded-[24px] bg-white p-5 shadow-xl shadow-stone-200/40">
+      <section class="border border-ink/12 bg-paper p-5">
         <h3 class="mb-3.5 text-[9.5px] font-medium uppercase tracking-[0.24em] text-stone-400">Condition</h3>
         <ul class="space-y-0.5">
           ${CONDITIONS.map((c) =>
@@ -153,7 +151,7 @@ function filterRail(filters, results, { mobile = false } = {}) {
       </section>
 
       <!-- price -->
-      <section class="rounded-[24px] bg-white p-5 shadow-xl shadow-stone-200/40">
+      <section class="border border-ink/12 bg-paper p-5">
         <div class="mb-3.5 flex items-baseline justify-between">
           <h3 class="text-[9.5px] font-medium uppercase tracking-[0.24em] text-stone-400">Max price</h3>
           <span id="price-range-label" class="text-[11.5px] font-medium tabular-nums text-zinc-900">Up to ${money(filters.max)}</span>
@@ -172,7 +170,7 @@ function filterRail(filters, results, { mobile = false } = {}) {
       </section>
 
       <!-- sold by -->
-      <section class="rounded-[24px] bg-white p-5 shadow-xl shadow-stone-200/40">
+      <section class="border border-ink/12 bg-paper p-5">
         <h3 class="mb-1 text-[9.5px] font-medium uppercase tracking-[0.24em] text-stone-400">Sold by</h3>
         <p class="mb-3.5 text-[10px] leading-snug text-stone-400">A marketplace — half the rail is listed by neighbours.</p>
         <div class="space-y-1.5">
@@ -186,8 +184,8 @@ function filterRail(filters, results, { mobile = false } = {}) {
                 data-action="toggle-filter"
                 data-key="soldBy"
                 data-value="${opt.id}"
-                class="group flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-all duration-300 ease-out ${(filters.soldBy || []).includes(opt.id) ? 'bg-zinc-900 text-stone-50' : 'hover:bg-stone-50'}">
-                <span class="grid h-4 w-4 shrink-0 place-items-center rounded-full border ${(filters.soldBy || []).includes(opt.id) ? 'border-stone-50 bg-stone-50 text-zinc-900' : 'border-stone-300 text-transparent'}">
+                class="group flex w-full items-center gap-3 border border-transparent px-2.5 py-2 text-left transition-all duration-300 ease-out ${(filters.soldBy || []).includes(opt.id) ? 'bg-zinc-900 text-stone-50' : 'hover:bg-stone-50'}">
+                <span class="grid h-4 w-4 shrink-0 place-items-center rounded-[2px] border ${(filters.soldBy || []).includes(opt.id) ? 'border-stone-50 bg-stone-50 text-zinc-900' : 'border-stone-300 text-transparent'}">
                   ${icon('check', 'h-2.5 w-2.5')}
                 </span>
                 <span class="min-w-0 flex-1">
@@ -201,12 +199,12 @@ function filterRail(filters, results, { mobile = false } = {}) {
       </section>
 
       <!-- era -->
-      <section class="rounded-[24px] bg-white p-5 shadow-xl shadow-stone-200/40">
+      <section class="border border-ink/12 bg-paper p-5">
         <h3 class="mb-3.5 text-[9.5px] font-medium uppercase tracking-[0.24em] text-stone-400">Vintage era</h3>
         <div class="flex flex-wrap gap-1.5">${chips(ERAS, 'eras')}</div>
       </section>
 
-      <div class="rounded-[24px] bg-stone-900 p-5 text-stone-200 shadow-xl shadow-stone-400/30">
+      <div class="border border-ink bg-ink p-5 text-stone-200">
         <p class="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] text-stone-400">${icon('ruler', 'h-3 w-3')} Measuring note</p>
         <p class="mt-2.5 text-[11.5px] leading-relaxed text-stone-300">
           All measurements are taken flat, by hand, in centimetres. Expect ±1 cm. Between sizes? Size up — these
@@ -241,16 +239,16 @@ function activeChips(filters) {
 
 function featureCard(product) {
   return html`
-    <article class="group relative col-span-full overflow-hidden rounded-[30px] bg-white p-3 shadow-xl shadow-stone-200/40 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl hover:shadow-stone-300/50 lg:col-span-2">
+    <article class="group relative col-span-full overflow-hidden border border-ink/15 bg-paper p-2.5 transition-colors duration-300 hover:border-ink lg:col-span-2">
       <div class="grid gap-0 sm:grid-cols-2">
-        <div class="relative overflow-hidden rounded-[22px] bg-stone-100">
+        <div class="relative overflow-hidden bg-stone-100">
           <a href="#/product/${product.id}" class="block h-full">
             <img src="${img(product.images[0])}" alt="${product.title}" data-fallback="" class="h-full min-h-[300px] w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]" />
           </a>
           <div class="absolute left-3 top-3">${conditionPill(product.condition)}</div>
         </div>
         <div class="flex flex-col justify-center p-6 sm:p-8">
-          <p class="text-[9px] font-medium uppercase tracking-[0.26em] text-clay-700">Editor's pick · ${product.era}</p>
+          <p class="font-mono text-[9px] uppercase tracking-[0.26em] text-oxblood">Editor's pick · ${product.era}</p>
           <a href="#/product/${product.id}" class="mt-3 font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-light leading-tight tracking-tight text-zinc-900 transition-colors duration-300 hover:text-clay-700">
             ${product.title}
           </a>
@@ -297,8 +295,8 @@ export function renderCatalog(state) {
             </p>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2.5">
-            <button type="button" data-action="toggle-mobile-filters" class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-[10px] uppercase tracking-[0.16em] text-zinc-800 shadow-sm shadow-stone-200/70 transition-all duration-300 ease-out hover:shadow-md lg:hidden">
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" data-action="toggle-mobile-filters" class="btn btn--line btn--sm lg:hidden">
               ${icon('filter', 'h-3.5 w-3.5')} Filters ${activeCount(filters) ? `· ${activeCount(filters)}` : ''}
             </button>
             <div class="relative">
@@ -306,16 +304,16 @@ export function renderCatalog(state) {
               <select
                 id="sort"
                 data-action="sort"
-                class="appearance-none rounded-full bg-white py-2.5 pl-4 pr-10 text-[10px] uppercase tracking-[0.14em] text-zinc-800 shadow-sm shadow-stone-200/70 transition-all duration-300 ease-out hover:shadow-md focus:outline-none"
+                class="field field--mono w-auto cursor-pointer appearance-none !py-3 pl-3.5 pr-10 uppercase tracking-[0.12em]"
               >
                 ${SORTS.map((s) => html`<option value="${s.id}" ${filters.sort === s.id ? 'selected' : ''}>${s.label}</option>`)}
               </select>
-              <span class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400">${icon('chevronDown', 'h-3 w-3')}</span>
+              <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/50">${icon('chevronDown', 'h-3 w-3')}</span>
             </div>
-            <a href="#/wishlist" class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-[10px] uppercase tracking-[0.16em] text-zinc-800 shadow-sm shadow-stone-200/70 transition-all duration-300 ease-out hover:shadow-md">
+            <a href="#/wishlist" class="btn btn--line btn--sm">
               ${icon('heart', 'h-3.5 w-3.5')} Vault
             </a>
-            <a href="#/sell" class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-4 py-2.5 text-[10px] font-medium uppercase tracking-[0.16em] text-stone-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-zinc-800 hover:shadow-md">
+            <a href="#/sell" class="btn btn--solid btn--sm">
               ${icon('plus', 'h-3.5 w-3.5')} List a piece
             </a>
           </div>

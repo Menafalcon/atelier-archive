@@ -202,7 +202,7 @@ export function renderSell(state) {
           <button
             type="button"
             data-action="fill-demo-listing"
-            class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-3 text-[10px] font-medium uppercase tracking-[0.18em] text-stone-50 shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-800"
+            class="btn btn--solid btn--sm"
           >
             ${icon('sparkle', 'h-3.5 w-3.5')} Fill demo item
           </button>
@@ -222,7 +222,7 @@ export function renderSell(state) {
                 </div>
                 <label
                   for="sell-photo-file"
-                  class="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-stone-100 px-4 py-2 text-[9.5px] font-medium uppercase tracking-[0.14em] text-zinc-900 transition hover:bg-zinc-900 hover:text-stone-50"
+                  class="btn btn--line btn--sm cursor-pointer"
                 >
                   ${icon('camera', 'h-3.5 w-3.5')} Upload from device
                   <input id="sell-photo-file" type="file" accept="image/*" class="sr-only" />

@@ -12,32 +12,28 @@ const byEra = (era) => PRODUCTS.filter((p) => p.era === era);
 function hero(state) {
   const lead = byId('aa-2107') || PRODUCTS[0];
   const secondary = byId('aa-1780') || PRODUCTS[1];
+  const sale = nextSale();
   return html`
-    <section class="relative overflow-hidden pb-8 pt-10 sm:pt-14 lg:pb-16 lg:pt-20">
-      <!-- ambient wash -->
-      <div class="pointer-events-none absolute -left-40 top-10 h-[420px] w-[420px] rounded-full bg-clay-100/40 blur-[120px]"></div>
-      <div class="pointer-events-none absolute -right-32 top-40 h-[380px] w-[380px] rounded-full bg-stone-200/50 blur-[110px]"></div>
-
+    <section class="relative border-b border-ink/10">
       <div class="mx-auto max-w-[1440px] px-5 lg:px-10">
-        <div class="grid items-center gap-10 lg:grid-cols-[1.02fr_1fr] lg:gap-14">
+        <div class="grid gap-12 pb-14 pt-9 lg:grid-cols-[1.04fr_1fr] lg:gap-16 lg:pb-20 lg:pt-14">
           <!-- copy -->
           <div class="relative z-10 max-w-2xl">
             <div class="flex flex-wrap items-center gap-2.5">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-2 text-[9.5px] font-medium uppercase tracking-[0.22em] text-stone-600 shadow-sm shadow-stone-200/70">
-                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500"></span>
+              <span class="tag">
+                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-600"></span>
                 Spring floor · ${PRODUCTS.length} pieces live
               </span>
-              <span class="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-3.5 py-2 text-[9.5px] font-medium uppercase tracking-[0.22em] text-stone-100">
-                ${icon('sparkle', 'h-3 w-3')} One of one, always
-              </span>
+              <span class="tag tag--solid">One of one, always</span>
+              <span class="hidden font-mono text-[8.5px] uppercase tracking-[0.2em] text-ink/35 sm:inline">No. 01 / 26</span>
             </div>
 
-            <h1 class="mt-7 font-display text-[clamp(2.7rem,5.6vw,4.9rem)] font-light leading-[0.98] tracking-[-0.035em] text-zinc-900">
+            <h1 class="mt-8 font-display text-[clamp(3rem,6.1vw,5.5rem)] leading-[0.92] tracking-[-0.035em] text-ink">
               Clothing that has<br class="hidden sm:block" />
-              <span class="italic text-clay-700">already</span> lived.
+              <span class="italic text-oxblood">already</span> lived.
             </h1>
 
-            <p class="mt-7 max-w-[30rem] text-[14.5px] leading-[1.75] text-stone-500">
+            <p class="mt-7 max-w-[32rem] text-[14px] leading-[1.8] text-stone-600">
               A marketplace for clothing that has already lived. Half the rail is sourced, graded and
               photographed in our studio; the other half is listed by neighbours clearing out their own
               closets — phone photos, honest measurements, fair prices. Nothing here is mass produced,
@@ -45,69 +41,78 @@ function hero(state) {
             </p>
 
             <div class="mt-9 flex flex-wrap items-center gap-3">
-              <a href="#/catalog" class="${BTN.primary}">
+              <a href="#/catalog" class="btn btn--solid">
                 Browse the floor
-                ${icon('arrowRight', 'h-3.5 w-3.5 transition-transform duration-300 ease-out group-hover/btn:translate-x-1')}
+                ${icon('arrowRight', 'h-3.5 w-3.5')}
               </a>
-              <a href="#/sell" class="${BTN.ghost}">
+              <a href="#/sell" class="btn btn--line">
                 ${icon('plus', 'h-3.5 w-3.5')} List a piece
               </a>
-              <a href="#/events" class="${BTN.ghost}">
-                ${icon('calendar', 'h-3.5 w-3.5')} Store sales
+              <a href="#/events" class="group ml-1 inline-flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.18em] text-ink/60 transition-colors hover:text-oxblood">
+                Store sales
+                <span class="h-px w-6 bg-ink/30 transition-all duration-300 group-hover:w-9 group-hover:bg-oxblood"></span>
               </a>
             </div>
 
-            <dl class="mt-11 grid max-w-md grid-cols-3 gap-4 border-t border-stone-200/80 pt-6">
+            <dl class="mt-12 grid max-w-lg grid-cols-3 border-t border-ink/15 pt-6">
               ${[
                 { k: '4,200+', v: 'Pieces rehomed' },
-                { k: '47%', v: 'Avg. below retail' },
-                { k: '4.9/5', v: 'From 1,840 buyers' },
+                { k: '47%', v: 'Below retail' },
+                { k: '4.9/5', v: '1,840 buyers' },
               ].map(
-                (s) => html`<div>
-                  <dt class="font-display text-[22px] font-light tracking-tight text-zinc-900">${s.k}</dt>
-                  <dd class="mt-1 text-[9.5px] uppercase tracking-[0.16em] text-stone-400">${s.v}</dd>
+                (s, i) => html`<div class="${i ? 'border-l border-ink/10 pl-5' : ''}">
+                  <dt class="font-display text-[30px] leading-none tracking-tight text-ink">${s.k}</dt>
+                  <dd class="mt-2 font-mono text-[8.5px] uppercase tracking-[0.18em] text-ink/45">${s.v}</dd>
                 </div>`,
               )}
             </dl>
           </div>
 
-          <!-- asymmetric collage -->
+          <!-- collage -->
           <div class="relative">
-            <div class="grid grid-cols-12 gap-3 sm:gap-4">
-              <a href="#/product/${lead.id}" class="group relative col-span-7 overflow-hidden rounded-[28px] shadow-2xl shadow-stone-300/50 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_40px_80px_-30px_rgba(120,113,108,0.55)]">
+            <div class="grid grid-cols-12 gap-3">
+              <a href="#/product/${lead.id}" class="group relative col-span-7 overflow-hidden border border-ink/15 bg-stone-100">
                 <img src="${img(EDITORIAL.leatherJacketMan, 900, 0.78)}" alt="90s Boxy Leather Blazer" data-fallback="" class="aspect-[3/4] w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]" />
-                <span class="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent"></span>
+                <span class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"></span>
+                <span class="absolute left-3 top-3 tag tag--vault">The Vault</span>
                 <span class="absolute inset-x-4 bottom-4">
-                  <span class="block text-[8.5px] uppercase tracking-[0.24em] text-stone-300">The Vault · 90s</span>
-                  <span class="mt-1 block font-display text-[17px] leading-tight text-white">Boxy Leather Blazer</span>
-                  <span class="mt-2 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] text-stone-200">${money(lead.price)} ${icon('arrowUpRight', 'h-3 w-3')}</span>
+                  <span class="font-mono text-[8px] uppercase tracking-[0.24em] text-bone/70">90s · Archive grade</span>
+                  <span class="mt-1.5 block font-display text-[22px] leading-tight text-paper">Boxy Leather Blazer</span>
+                  <span class="mt-2 inline-flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.14em] text-bone/85">${money(lead.price)} ${icon('arrowUpRight', 'h-3 w-3')}</span>
                 </span>
               </a>
 
-              <div class="col-span-5 flex flex-col gap-3 sm:gap-4">
-                <a href="#/product/${secondary.id}" class="group relative flex-1 overflow-hidden rounded-[24px] shadow-xl shadow-stone-300/40 transition-all duration-300 ease-out hover:-translate-y-1">
-                  <img src="${img(EDITORIAL.fringedPoncho, 600, 0.8)}" alt="80s Mohair Fringe Poncho" data-fallback="" class="h-full min-h-[150px] w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
-                  <span class="absolute inset-0 bg-gradient-to-t from-stone-950/60 to-transparent"></span>
-                  <span class="absolute inset-x-3 bottom-3 text-[10px] uppercase tracking-[0.16em] text-white">Mohair poncho</span>
+              <div class="col-span-5 flex flex-col gap-3">
+                <a href="#/product/${secondary.id}" class="group relative flex-1 overflow-hidden border border-ink/15 bg-stone-100">
+                  <img src="${img(EDITORIAL.fringedPoncho, 600, 0.8)}" alt="80s Mohair Fringe Poncho" data-fallback="" class="h-full min-h-[190px] w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
+                  <span class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent"></span>
+                  <span class="absolute inset-x-3 bottom-3">
+                    <span class="font-mono text-[8px] uppercase tracking-[0.2em] text-bone/70">Neighbour rail</span>
+                    <span class="mt-1 block font-display text-[15px] leading-tight text-paper">Mohair poncho</span>
+                  </span>
                 </a>
 
-                <div class="rounded-[24px] bg-zinc-900 p-5 text-stone-100 shadow-xl shadow-stone-400/30">
-                  <p class="text-[8.5px] uppercase tracking-[0.24em] text-stone-400">Next store sale</p>
-                  <p class="mt-2 font-display text-[16px] leading-tight">${nextSale().store}<br />${nextSale().city} · −${nextSale().discount}%</p>
-                  <a href="#/events" class="mt-3.5 inline-flex items-center gap-1.5 text-[9.5px] uppercase tracking-[0.16em] text-stone-300 transition-colors duration-300 hover:text-white">
-                    ${longDate(nextSale().from)} ${icon('arrowRight', 'h-3 w-3')}
+                <div class="relative border border-ink bg-ink p-5 text-bone">
+                  <p class="font-mono text-[8px] uppercase tracking-[0.24em] text-bone/55">Next store sale</p>
+                  <p class="mt-2.5 font-display text-[21px] leading-[1.1] text-paper">${sale.store}<br /><span class="text-bone/70">${sale.city} · −${sale.discount}%</span></p>
+                  <a href="#/events" class="mt-4 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-bone/70 transition-colors hover:text-paper">
+                    ${longDate(sale.from)} ${icon('arrowRight', 'h-3 w-3')}
                   </a>
                 </div>
               </div>
             </div>
 
-            <!-- floating authenticity chip -->
-            <div class="absolute -left-4 -top-5 hidden items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-xl shadow-stone-300/50 backdrop-blur sm:flex">
-              <span class="grid h-9 w-9 place-items-center rounded-full bg-emerald-50 text-emerald-700">${icon('shield', 'h-4 w-4')}</span>
-              <div>
-                <p class="text-[10.5px] font-medium text-zinc-900">Authenticated by hand</p>
-                <p class="mt-0.5 text-[9.5px] text-stone-400">Two-person, 40-point check</p>
-              </div>
+            <!-- rotating seal -->
+            <div class="seal absolute -bottom-7 -left-7 hidden h-[132px] w-[132px] sm:grid" aria-hidden="true">
+              <svg class="seal__text" viewBox="0 0 132 132">
+                <defs>
+                  <path id="seal-arc" d="M66,66 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0" />
+                </defs>
+                <text fill="#171410" font-family="IBM Plex Mono, monospace" font-size="7.4" textLength="306" lengthAdjust="spacing">
+                  <textPath href="#seal-arc" startOffset="0">AUTHENTICATED IN STUDIO · 40-POINT CHECK · LA MARSA ·</textPath>
+                </text>
+              </svg>
+              <span class="seal__core">A/A</span>
             </div>
           </div>
         </div>

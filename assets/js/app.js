@@ -22,6 +22,7 @@ import { renderCheckout, summaryPanel } from './views/checkout.js';
 import { renderAccount } from './views/account.js';
 import { renderSales } from './views/sales.js';
 import { renderSupport } from './views/support.js';
+import { play, toggleMuted } from './core/sound.js';
 import { renderSell, renderSellPreview, DEMO_LISTINGS } from './views/sell.js';
 import { CHAT_SCRIPT, CHAT_FALLBACK } from './data/content.js';
 
@@ -349,6 +350,12 @@ function requireAuth(pending) {
 }
 
 const CLICK = {
+  /* sound */
+  'toggle-sound': () => {
+    const muted = toggleMuted();
+    if (!muted) play('pop');
+    renderHeaderRegion();
+  },
   /* overlays */
   'open-cart': () => actions.openDrawer('cart'),
   'open-wishlist': () => actions.openDrawer('wishlist'),
@@ -877,6 +884,18 @@ function boot() {
     const action = el.dataset.action;
     const handler = CLICK[action];
     if (!handler) return;
+    const sound = {
+      'add-to-cart': 'pop',
+      wishlist: 'pop',
+      'move-to-cart': 'pop',
+      'place-order': 'chime',
+      'open-cart': 'whoosh',
+      'open-wishlist': 'whoosh',
+      'open-auth': 'whoosh',
+      'open-search': 'whoosh',
+      'toggle-sound': '',
+    }[action] ?? 'tick';
+    if (sound) play(sound);
     const href = el.tagName === 'A' ? el.getAttribute('href') : null;
     if (href && href.startsWith('#/')) {
       event.preventDefault();

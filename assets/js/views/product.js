@@ -163,10 +163,10 @@ export function renderProduct(state, params) {
 
             <!-- actions -->
             <div class="mt-6 flex flex-col gap-2.5 sm:flex-row">
-              <button type="button" data-action="${inBag ? 'goto-cart' : 'add-to-cart'}" data-id="${product.id}" class="${BTN.primary} flex-1 !py-4">
+              <button type="button" data-action="${inBag ? 'goto-cart' : 'add-to-cart'}" data-id="${product.id}" class="${BTN.primary} min-w-0 flex-1 !py-4">
                 ${icon('bag', 'h-4 w-4')} ${inBag ? 'In your bag — review' : `Add to bag · ${money(product.price)}`}
               </button>
-              <button type="button" data-action="wishlist" data-id="${product.id}" class="${BTN.ghost} !py-4 sm:w-auto">
+              <button type="button" data-action="wishlist" data-id="${product.id}" class="${BTN.ghost} !px-3 !py-4" style="width:132px">
                 ${icon('heart', `h-4 w-4 ${saved ? 'fill-current text-clay-600' : ''}`)} ${saved ? 'In vault' : 'Save'}
               </button>
             </div>

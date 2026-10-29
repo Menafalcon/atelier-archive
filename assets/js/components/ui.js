@@ -52,6 +52,8 @@ const PATHS = {
   quote: '<path d="M9 7C6.5 8 5 10 5 13c0 2 1.2 3.5 3 3.5S11 15.2 11 13.4c0-1.7-1.2-2.9-2.8-2.9M19 7c-2.5 1-4 3-4 6 0 2 1.2 3.5 3 3.5s3-1.3 3-3.1c0-1.7-1.2-2.9-2.8-2.9"/>',
   camera: '<rect x="3" y="7.5" width="18" height="12" rx="2.5"/><circle cx="12" cy="13.5" r="3.2"/><path d="M8.6 7.5 9.8 5.4h4.4l1.2 2.1"/>',
   handshake: '<path d="m6 12 3-3 3 2 3-2 3 3-3.5 4.5a2 2 0 0 1-3 .2L6 12Z"/><path d="M3 10.5 6 12M21 10.5 18 12"/>',
+  soundOn: '<path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"/>',
+  soundOff: '<path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="m17 9 5 6M22 9l-5 6"/>',
 };
 
 export function icon(name, className = 'h-5 w-5') {
@@ -66,44 +68,38 @@ export function icon(name, className = 'h-5 w-5') {
  * Class tokens
  * ------------------------------------------------------------------ */
 export const BTN = {
-  primary:
-    'group/btn inline-flex items-center justify-center gap-2.5 rounded-full bg-zinc-900 px-7 py-3.5 text-[11px] font-medium uppercase tracking-[0.2em] text-stone-50 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-zinc-800 hover:shadow-xl hover:shadow-stone-400/40 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-40',
-  ghost:
-    'group/btn inline-flex items-center justify-center gap-2.5 rounded-full border border-stone-300/70 bg-transparent px-6 py-3.5 text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-700 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-stone-400 hover:bg-white hover:shadow-lg hover:shadow-stone-200/60',
-  soft:
-    'inline-flex items-center justify-center gap-2 rounded-full bg-stone-100/90 px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-700 transition-all duration-300 ease-out hover:bg-stone-200/80 hover:text-zinc-900',
-  icon:
-    'inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/80 text-zinc-700 shadow-sm shadow-stone-200/60 backdrop-blur transition-all duration-300 ease-out hover:scale-105 hover:bg-white hover:text-zinc-900 hover:shadow-md hover:shadow-stone-300/50',
-  link: 'inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-900 underline-offset-[6px] transition-all duration-300 ease-out hover:text-clay-700 hover:underline',
+  primary: 'btn btn--solid',
+  ghost: 'btn btn--line',
+  soft: 'btn btn--line btn--sm',
+  icon: 'btn btn--icon btn--line',
+  link: 'inline-flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-ink underline-offset-[6px] transition-colors duration-300 hover:text-clay-700 hover:underline',
 };
 
-export const FIELD =
-  'w-full rounded-2xl border-0 bg-stone-100/70 px-4 py-3.5 text-[13.5px] text-zinc-900 placeholder:text-stone-400 shadow-inner shadow-stone-200/50 transition-all duration-300 ease-out focus:bg-white focus:outline-none focus:ring-2 focus:ring-zinc-900/10';
-
-export const LABEL = 'block text-[10px] font-medium uppercase tracking-[0.22em] text-stone-500';
+export const FIELD = 'field';
+export const LABEL = 'eyebrow block';
 
 /* ------------------------------------------------------------------ *
  * Small parts
  * ------------------------------------------------------------------ */
 const CONDITION_TONE = {
-  Vault: 'bg-amber-50/95 text-amber-900 ring-1 ring-amber-200/60',
-  Excellent: 'bg-emerald-50/95 text-emerald-900 ring-1 ring-emerald-200/60',
-  Good: 'bg-stone-100/95 text-stone-700 ring-1 ring-stone-300/60',
+  Vault: 'tag--vault',
+  Excellent: 'tag--good',
+  Good: '',
 };
 
 export const conditionPill = (condition, extra = '') => html`
-  <span class="inline-flex items-center gap-1.5 rounded-full ${CONDITION_TONE[condition] || CONDITION_TONE.Good} px-3 py-1 text-[9.5px] font-medium uppercase tracking-[0.16em] backdrop-blur ${extra}">
-    <span class="h-1 w-1 rounded-full bg-current opacity-70"></span>${condition}
+  <span class="tag ${CONDITION_TONE[condition] ?? ''} ${extra}">
+    <span class="h-1 w-1 rounded-full bg-current opacity-60"></span>${condition}
   </span>`;
 
 export function stars(rating, reviews, cls = '') {
   const full = Math.round(rating);
   return html`
     <span class="inline-flex items-center gap-1.5 ${cls}">
-      <span class="flex items-center gap-0.5 text-amber-600">
-        ${Array.from({ length: 5 }, (_, i) => html`<span class="text-[11px] leading-none ${i < full ? '' : 'opacity-25'}">★</span>`)}
+      <span class="flex items-center gap-0.5 text-brass">
+        ${Array.from({ length: 5 }, (_, i) => html`<span class="text-[10px] leading-none ${i < full ? '' : 'opacity-25'}">★</span>`)}
       </span>
-      <span class="text-[11px] tabular-nums text-stone-500">${Number(rating).toFixed(1)}${reviews !== undefined ? ` · ${reviews}` : ''}</span>
+      <span class="font-mono text-[10px] tabular-nums text-stone-500">${Number(rating).toFixed(1)}${reviews !== undefined ? ` · ${reviews}` : ''}</span>
     </span>`;
 }
 
@@ -113,11 +109,11 @@ export function priceRow(product, size = 'md') {
   const off = discountPct(product);
   return html`
     <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-      <span class="font-display ${size === 'lg' ? 'text-3xl' : 'text-[19px]'} tracking-tight text-zinc-900">${money(product.price)}</span>
+      <span class="${size === 'lg' ? 'font-display text-[34px] leading-none' : 'pcard__price'} tracking-tight text-ink">${money(product.price)}</span>
       ${product.retail && product.retail > product.price
-        ? html`<span class="text-[11.5px] text-stone-400 line-through">${money(product.retail)}</span>`
+        ? html`<span class="pcard__old">${money(product.retail)}</span>`
         : ''}
-      ${off > 0 ? html`<span class="text-[10px] font-medium uppercase tracking-[0.14em] text-emerald-700">−${off}%</span>` : ''}
+      ${off > 0 ? html`<span class="font-mono text-[9px] uppercase tracking-[0.12em] text-emerald-700">−${off}%</span>` : ''}
     </div>`;
 }
 
@@ -132,26 +128,23 @@ export function productCard(product, { variant = 'default', index = 0 } = {}) {
   const resale = seller?.type === 'individual';
 
   return html`
-    <article
-      class="group relative flex flex-col overflow-hidden rounded-[26px] bg-white p-3 shadow-xl shadow-stone-200/40 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.015] hover:shadow-2xl hover:shadow-stone-300/50"
-      data-index="${index}"
-    >
-      <div class="relative overflow-hidden rounded-[20px] bg-stone-100 ${tall ? 'aspect-[3/4.3]' : 'aspect-[4/5]'} ${resale ? 'photo-flash' : ''}">
+    <article class="pcard group" data-index="${index}">
+      <div class="pcard__media ${tall ? '!aspect-[3/4.3]' : ''} ${resale ? 'photo-flash' : ''}">
         <a href="#/product/${product.id}" class="block h-full w-full" aria-label="View ${product.title}">
           <img
             src="${product.images[0] ? img(product.images[0]) : ''}"
             alt="${product.title}"
             loading="lazy"
             data-fallback=""
-            class="h-full w-full object-cover transition-transform duration-[1100ms] ease-out will-change-transform group-hover:scale-[1.055] ${resale ? 'photo-phone' : ''}"
+            class="h-full w-full object-cover will-change-transform ${resale ? 'photo-phone' : ''}"
           />
-          <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-900/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"></span>
+          <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
         </a>
 
-        <div class="pointer-events-none absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+        <div class="pointer-events-none absolute inset-x-2.5 top-2.5 flex items-start justify-between gap-2">
           ${conditionPill(product.condition)}
           ${product.badge
-            ? html`<span class="rounded-full bg-zinc-900/85 px-2.5 py-1 text-[9px] font-medium uppercase tracking-[0.16em] text-stone-50 backdrop-blur">${product.badge}</span>`
+            ? html`<span class="tag tag--solid">${product.badge}</span>`
             : ''}
         </div>
 
@@ -161,48 +154,51 @@ export function productCard(product, { variant = 'default', index = 0 } = {}) {
           data-id="${product.id}"
           aria-pressed="${saved}"
           aria-label="${saved ? 'Remove from vault' : 'Save to vault'}"
-          class="absolute right-3 ${product.badge ? 'top-12' : 'top-3'} inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-zinc-800 shadow-sm shadow-stone-300/50 backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white ${saved ? '!text-clay-600' : ''}"
+          class="absolute right-2.5 ${product.badge ? 'top-12' : 'top-2.5'} grid h-9 w-9 place-items-center border border-ink/15 bg-paper/90 text-ink transition-all duration-300 hover:border-ink hover:bg-ink hover:text-bone ${saved ? '!bg-oxblood !text-paper !border-oxblood' : ''}"
         >
           ${icon('heart', `h-4 w-4 ${saved ? 'fill-current' : ''}`)}
         </button>
 
-        <div class="absolute inset-x-3 bottom-3 translate-y-4 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        <div class="absolute inset-x-2.5 bottom-2.5 translate-y-4 opacity-0 transition-all duration-350 ease-out group-hover:translate-y-0 group-hover:opacity-100">
           <button
             type="button"
             data-action="${inBag ? 'goto-cart' : 'add-to-cart'}"
             data-id="${product.id}"
-            class="w-full rounded-full bg-white/92 px-4 py-2.5 text-[10px] font-medium uppercase tracking-[0.18em] text-zinc-900 shadow-lg shadow-stone-900/10 backdrop-blur-md transition-all duration-300 ease-out hover:bg-zinc-900 hover:text-stone-50"
+            class="btn btn--solid btn--sm w-full"
           >
             ${inBag ? 'In your bag — review' : 'Add to bag'}
+            ${icon('plus', 'h-3 w-3')}
           </button>
         </div>
       </div>
 
-      <div class="flex flex-1 flex-col px-2.5 pb-1.5 pt-4">
-        <p class="text-[9.5px] font-medium uppercase tracking-[0.22em] text-stone-400">${product.brand} · ${product.era}</p>
-        <a href="#/product/${product.id}" class="mt-2 block font-display text-[16.5px] leading-[1.3] tracking-tight text-zinc-900 transition-colors duration-300 ease-out hover:text-clay-700">
+      <div class="flex flex-1 flex-col px-1.5 pb-1 pt-4">
+        <p class="pcard__meta">${product.brand} · ${product.era}</p>
+        <a href="#/product/${product.id}" class="pcard__title mt-2 block">
           ${product.title}
         </a>
-        <p class="mt-1.5 text-[11.5px] text-stone-500">${product.category} · Size ${product.size} · ${compact(product.saves)} saved</p>
+        <p class="mt-2 font-mono text-[9.5px] uppercase tracking-[0.12em] text-stone-500">
+          ${product.category} · Size ${product.size} · ${compact(product.saves)} saved
+        </p>
         ${resale
-          ? html`<p class="mt-1.5 flex items-center gap-1.5 text-[10px] text-stone-400">
+          ? html`<p class="mt-2 flex items-center gap-1.5 font-mono text-[9.5px] text-stone-400">
               <span class="text-stone-300">${icon('camera', 'h-3 w-3')}</span>
               <span class="truncate">${seller.handle}</span>
               <span class="text-stone-300">·</span>
               <span class="shrink-0">${product.images.length} photos</span>
             </p>`
-          : html`<p class="mt-1.5 flex items-center gap-1.5 text-[10px] text-stone-400">
-              <span class="text-emerald-600">${icon('shield', 'h-3 w-3')}</span>
+          : html`<p class="mt-2 flex items-center gap-1.5 font-mono text-[9.5px] text-stone-400">
+              <span class="text-emerald-700">${icon('shield', 'h-3 w-3')}</span>
               <span class="truncate">Studio authenticated</span>
             </p>`}
-        <div class="mt-auto flex items-center justify-between gap-2 pt-4">
+        <div class="mt-auto flex items-end justify-between gap-2 border-t border-ink/10 pt-3.5 mt-4">
           ${priceRow(product)}
           ${product.isUserListing
             ? html`<button
                 type="button"
                 data-action="delete-listing"
                 data-id="${product.id}"
-                class="inline-flex items-center gap-1 rounded-full bg-stone-100 px-2.5 py-1 text-[9px] font-medium uppercase tracking-[0.12em] text-stone-500 transition hover:bg-clay-600 hover:text-white"
+                class="inline-flex items-center gap-1 border border-ink/15 px-2 py-1 font-mono text-[8.5px] uppercase tracking-[0.12em] text-stone-500 transition hover:border-clay-700 hover:bg-clay-700 hover:text-paper"
                 title="Remove your listing"
               >
                 ${icon('trash', 'h-3 w-3')} Remove
@@ -221,11 +217,11 @@ export function sectionHead({ kicker, title, copy, action, align = 'left', tone 
   return html`
     <div class="flex flex-col gap-6 ${centered ? 'items-center text-center' : 'md:flex-row md:items-end md:justify-between'}">
       <div class="${centered ? 'max-w-2xl' : 'max-w-xl'}">
-        ${kicker ? html`<p class="mb-4 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.3em] text-stone-400 ${centered ? 'justify-center' : ''}">
-          <span class="h-px w-8 bg-stone-300"></span>${kicker}
+        ${kicker ? html`<p class="eyebrow mb-4 flex items-center gap-3 ${centered ? 'justify-center' : ''}">
+          <span class="inline-block h-px w-8 bg-ink/40"></span>${kicker}
         </p>` : ''}
-        <h2 class="font-display text-[clamp(1.9rem,3.4vw,3rem)] font-light leading-[1.08] tracking-[-0.02em] ${tone === 'light' ? 'text-stone-50' : 'text-zinc-900'}">${title}</h2>
-        ${copy ? html`<p class="mt-5 max-w-lg text-[13.5px] leading-relaxed ${tone === 'light' ? 'text-stone-300' : 'text-stone-500'} ${centered ? 'mx-auto' : ''}">${copy}</p>` : ''}
+        <h2 class="font-display text-[clamp(2rem,3.6vw,3.15rem)] leading-[1.02] ${tone === 'light' ? 'text-stone-50' : 'text-ink'}">${title}</h2>
+        ${copy ? html`<p class="mt-5 max-w-lg text-[13px] leading-relaxed ${tone === 'light' ? 'text-stone-300' : 'text-stone-500'} ${centered ? 'mx-auto' : ''}">${copy}</p>` : ''}
       </div>
       ${action ? html`<div class="shrink-0">${action}</div>` : ''}
     </div>`;
@@ -233,9 +229,9 @@ export function sectionHead({ kicker, title, copy, action, align = 'left', tone 
 
 export function emptyState({ title, copy, action, iconName = 'sparkle' }) {
   return html`
-    <div class="mx-auto flex max-w-md flex-col items-center rounded-[32px] bg-white px-10 py-20 text-center shadow-xl shadow-stone-200/40">
-      <span class="mb-7 inline-flex h-16 w-16 items-center justify-center rounded-full bg-stone-100 text-stone-400">${icon(iconName, 'h-7 w-7')}</span>
-      <h3 class="font-display text-2xl tracking-tight text-zinc-900">${title}</h3>
+    <div class="mx-auto flex max-w-md flex-col items-center border border-ink/15 bg-paper px-10 py-20 text-center">
+      <span class="mb-7 inline-flex h-14 w-14 items-center justify-center border border-ink/20 text-stone-400">${icon(iconName, 'h-6 w-6')}</span>
+      <h3 class="font-display text-2xl text-ink">${title}</h3>
       <p class="mt-3 text-[13px] leading-relaxed text-stone-500">${copy}</p>
       ${action ? html`<div class="mt-8">${action}</div>` : ''}
     </div>`;
